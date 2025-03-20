@@ -51,10 +51,10 @@ services:
       - "9000:9000"
       - "9001:9001"
     networks:
-      - minio-net
+      - servers_minio-net
 
 networks:
-  minio-net:
+  servers_minio-net:
     driver: bridge
 ```
 
@@ -96,17 +96,16 @@ services:
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
       MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
-#      MINIO_SKIP_CLIENT: yes
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     ports:
       - "9000:9000"
       - "9001:9001"
     networks:
-      - minio-net
+      - 
 
 networks:
-  minio-net:
+  servers_minio-net:
     driver: bridge
 ```
 
