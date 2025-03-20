@@ -54,7 +54,7 @@ services:
 docker compose -f docker-compose-server.yaml up -d
 ```
 
-verificar com
+Verifique se o container esta rodando com:
 ```sh
 docker ps
 ```
