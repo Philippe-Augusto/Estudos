@@ -1,0 +1,91 @@
+services:
+  minio1:
+    image: bitnami/minio:2024.5.10
+    container_name: minio1
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    volumes:
+      - /home/philippe/minIO/servers/minio1_data:/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
+#      MINIO_SKIP_CLIENT: yes
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - minio-net
+
+  minio2:
+    image: bitnami/minio:2024.5.10
+    container_name: minio2
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    volumes:
+      - /home/philippe/minIO/servers/minio2_data:/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
+#      MINIO_SKIP_CLIENT: yes
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9002:9000"
+      - "9003:9001"
+    networks:
+      - minio-net
+
+  minio3:
+    image: bitnami/minio:2024.5.10
+    container_name: minio3
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    volumes:
+      - /home/philippe/minIO/servers/minio3_data:/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
+#      MINIO_SKIP_CLIENT: yes
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9004:9000"
+      - "9005:9001"
+    networks:
+      - minio-net
+
+  minio4:
+    image: bitnami/minio:2024.5.10
+    container_name: minio4
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    volumes:
+      - /home/philippe/minIO/servers/minio4_data:/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
+#      MINIO_SKIP_CLIENT: yes
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9006:9000"
+      - "9007:9001"
+    networks:
+      - minio-net
+
+
+networks:
+  minio-net:
+    driver: bridge
+
+#volumes:
+#  minio1_data:
+#    driver: local
+#  minio_2_data:
+#    driver: local
