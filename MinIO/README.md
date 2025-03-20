@@ -36,26 +36,18 @@ Iremos utilizar o docker-compose para fazer o deploy do minIO
 
 ```yaml
 services:
-  minio1:
+  minio-server:
     image: bitnami/minio:2024.5.10
     container_name: minio-server
     volumes:
-      - /home/philippe/minIO/servers/minio1_data:/data #Persistencia de dados, segue o modelo: 
-#      						       #</path/to/your/directory/of/persistency>:/data
+      - /home/philippe/minIO/data:/bitnami/minio/data
+    restart: always
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
-      MINIO_SCHEME: http
-      TZ: "America/Sao_Paulo"
     ports:
       - "9000:9000"
       - "9001:9001"
-    networks:
-      - servers_minio-net
-
-networks:
-  servers_minio-net:
-    driver: bridge
 ```
 
 ```sh
