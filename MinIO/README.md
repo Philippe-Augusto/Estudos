@@ -87,21 +87,19 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: http://minio1:9000 http://minio2:9000 http://minio3:9000 http://minio4:9000
+      MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     ports:
       - "9000:9000"
       - "9001:9001"
     networks:
-      - 
+      - minio-net
 
 networks:
-  servers_minio-net:
+  minio-net:
     driver: bridge
 ```
-
-
 
 ## Testando o deploy dos servidores
 
