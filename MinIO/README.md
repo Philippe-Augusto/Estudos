@@ -116,11 +116,11 @@ services:
       MINIO_SERVER_ACCESS_KEY: "admin"
       MINIO_SERVER_SECRET_KEY: "admin123"
     networks:
-      - minio-net
+      - servers_minio-net
     command: ["sleep", "infinity"]
 
 networks:
-  minio-net:
+  servers_minio-net:
     external: true
 ```
 
