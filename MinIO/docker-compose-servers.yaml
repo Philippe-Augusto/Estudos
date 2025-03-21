@@ -31,9 +31,6 @@ services:
       MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
-    ports:
-      - "9002:9000"
-      - "9003:9001"
     networks:
       - minio-net
 
@@ -50,9 +47,6 @@ services:
       MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
-    ports:
-      - "9004:9000"
-      - "9005:9001"
     networks:
       - minio-net
 
@@ -69,9 +63,6 @@ services:
       MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
-    ports:
-      - "9006:9000"
-      - "9007:9001"
     networks:
       - minio-net
 
