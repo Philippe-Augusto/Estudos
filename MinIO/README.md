@@ -66,7 +66,7 @@ http://localhost:9000/
 
 ## Deploy de 4 servidores MinIO utilizando o Docker:
 
-> 📌 **Nota:** Não é possível fazer o deploy de menos de 4 servidores no MinIO, por isso 
+> 📌 **Nota:** Não é possível fazer o deploy de menos de 4 servidores no MinIO, por isso faremos o deploy com 4, apenas para fins de testes
 
 ```sh
 docker pull bitnami/minio:2024.5.10
