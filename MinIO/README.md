@@ -32,6 +32,13 @@ Referencia: [Instalando docker no ubuntu](https://docs.docker.com/engine/install
 docker pull bitnami/minio:2024.5.10
 ```
 
+## Prepare o diretório de persistencia de dados
+
+```sh
+mkdir /home/philippe/minIO/data
+sudo chown 1001 /home/philippe/minIO/data
+```
+
 Iremos utilizar o docker-compose para fazer o deploy do minIO
 
 ```yaml
@@ -71,6 +78,12 @@ http://localhost:9000/
 ```sh
 docker pull bitnami/minio:2024.5.10
 ```
+## Preparar os diretórios de persistencia de dados
+
+```sh
+mkdir /home/philippe/minIO/servers/minio{1..4}_data
+sudo chown 1001 /home/philippe/minIO/servers/minio{1..4}_data
+```
 
 Iremos utilizar o docker-compose para fazer o deploy dos servidores
 
@@ -106,20 +119,28 @@ networks:
 Configurar o MinIO Client - [Veja mais detalhes aqui](./minio-client/README.md)
 ```yaml
 services:
-  minio-client:
-    image: bitnami/minio-client:latest
-    container_name: minio-client
+  minio1:
+    image: bitnami/minio:2024.5.10
+    container_name: minio1
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
+    volumes:
+      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
     environment:
-      MINIO_SERVER_HOST: "minio1"
-      MINIO_SERVER_ACCESS_KEY: "admin"
-      MINIO_SERVER_SECRET_KEY: "admin123"
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
     networks:
-      - servers_minio-net
-    command: ["sleep", "infinity"]
+      - minio-net
 
 networks:
-  servers_minio-net:
-    external: true
+  minio-net:
+    driver: bridge
 ```
 
 Execute o container com:
