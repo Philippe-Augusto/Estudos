@@ -2,14 +2,14 @@ services:
   minio1:
     image: bitnami/minio:2024.5.10
     container_name: minio1
-    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio1_data:/data
+      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     ports:
@@ -21,14 +21,14 @@ services:
   minio2:
     image: bitnami/minio:2024.5.10
     container_name: minio2
-    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio2_data:/data
+      - /home/philippe/minIO/servers/minio2_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     networks:
@@ -37,14 +37,14 @@ services:
   minio3:
     image: bitnami/minio:2024.5.10
     container_name: minio3
-    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio3_data:/data
+      - /home/philippe/minIO/servers/minio3_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     networks:
@@ -53,14 +53,14 @@ services:
   minio4:
     image: bitnami/minio:2024.5.10
     container_name: minio4
-    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio4_data:/data
+      - /home/philippe/minIO/servers/minio4_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
       MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: http://minio{1..4}:9000 
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
       MINIO_SCHEME: http
       TZ: "America/Sao_Paulo"
     networks:
