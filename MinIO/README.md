@@ -282,8 +282,10 @@ Liste todas as métricas
 {__name__=~"minio.*"}
 ```
 
-Parabéns, você está monitorando o MinIO através do Prometheus
+Parabéns!!, você está monitorando o MinIO através do Prometheus.
 
-
-
+## Referencias:
+[MinIO Documentation](https://min.io/docs/minio/kubernetes/upstream/index.html)
+[Prometheus](https://prometheus.io/docs/introduction/overview/)
+[Docker](https://docs.docker.com/get-started/)
 
