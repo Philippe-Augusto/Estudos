@@ -222,7 +222,7 @@ scrape_configs:
   - targets: ['minio1:9000']
 ```
 
-Para integrar o Prometheus ao MinIO, é necessário adicionar um container do Prometheus ao docker-compose.yaml e configurar algumas variáveis de ambiente no MinIO. O YAML completo está disponível no repositório: [Yaml Completo](./docker-compose-servers-with-prometheus.md)
+Para integrar o Prometheus ao MinIO, é necessário adicionar um container do Prometheus ao docker-compose.yaml e configurar algumas variáveis de ambiente no MinIO. O YAML completo está disponível no repositório: [Yaml Completo](./docker-compose-servers-with-prometheus.yaml)
 
 ```sh
 minio1:
@@ -268,6 +268,17 @@ Verifique se o target do MinIO está ativo em:
 ```link
 http://localhost:9090/targets
 ```
+
+Execute uma query no prometheus
+```sh
+minio_cluster_drive_online_total
+```
+
+Liste todas as métricas
+```sh
+{__name__=~"minio.*"}
+```
+
 Parabéns, você está monitorando o MinIO através do Prometheus
 
 
