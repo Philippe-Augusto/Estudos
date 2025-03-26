@@ -32,7 +32,7 @@ Referencia: [Instalando docker no ubuntu](https://docs.docker.com/engine/install
 docker pull bitnami/minio:2024.5.10
 ```
 
-## Prepare o diretório de persistencia de dados
+### Prepare o diretório de persistencia de dados
 
 ```sh
 mkdir /home/philippe/minIO/data
@@ -78,7 +78,7 @@ http://localhost:9000/
 ```sh
 docker pull bitnami/minio:2024.5.10
 ```
-## Preparar os diretórios de persistencia de dados
+### Preparar os diretórios de persistencia de dados
 
 ```sh
 mkdir /home/philippe/minIO/servers/minio{1..4}_data
@@ -114,7 +114,7 @@ networks:
     driver: bridge
 ```
 
-## Testando o deploy dos servidores
+### Testando o deploy dos servidores
 
 Configurar o MinIO Client - [Veja mais detalhes aqui](./minio-client/README.md)
 ```yaml
@@ -194,4 +194,82 @@ $ mc admin info minio
 4 drives online, 0 drives offline, EC:2
 ```
 Parabens! Voce fez o deployment do MinIO
+
+## Monitoramento do MinIO com o Prometheus
+
+Este guia apresenta um **passo a passo** para configurar o **Prometheus** e coletar as métricas do **MinIO** utilizando **Docker Compose**.  
+
+### Configuração do MinIO
+
+Antes de gerar o arquivo de configuração, configure um **alias** para o MinIO no MinIO Server:  
+```sh
+mc alias set minio http://minio1:9000 admin admin123
+```
+
+Agora, execute o seguinte comando para gerar a configuração necessária para o Prometheus:
+```sh
+mc admin prometheus generate minio
+```
+
+Crie um arquivo prometheus.yml com o conteudo gerado no comando acima:
+```yml
+scrape_configs:
+- job_name: minio-job
+  bearer_token: <SEU-TOKEN>
+  metrics_path: /minio/v2/metrics/cluster
+  scheme: http
+  static_configs:
+  - targets: ['minio1:9000']
+```
+
+Para integrar o Prometheus ao MinIO, é necessário adicionar um container do Prometheus ao docker-compose.yaml e configurar algumas variáveis de ambiente no MinIO. O YAML completo está disponível no repositório: [Yaml Completo](./docker-compose-servers-with-prometheus.md)
+
+```sh
+minio1:
+    image: bitnami/minio:2024.5.10
+    container_name: minio1
+    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
+    volumes:
+      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DISTRIBUTED_MODE_ENABLED: yes
+      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
+      MINIO_PROMETHEUS_URL: http://prometheus:9090
+      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_SCHEME: http
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - minio-net
+
+prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - /home/philippe/minIO/servers/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - minio-net #Certifique-se de colocar o container na mesma network em que os servidores do MinIO estao rodando.
+```
+
+## Acessando o prometheus
+Após iniciar os containers, acesse o Prometheus em:
+```link
+http://localhost:9090
+```
+Verifique se o target do MinIO está ativo em:
+```link
+http://localhost:9090/targets
+```
+Parabéns, você está monitorando o MinIO através do Prometheus
+
+
+
 
