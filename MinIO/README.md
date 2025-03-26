@@ -213,6 +213,9 @@ mc admin prometheus generate minio
 
 Crie um arquivo prometheus.yml com o conteudo gerado no comando acima:
 ```yml
+global:
+   scrape_interval: 60s
+
 scrape_configs:
 - job_name: minio-job
   bearer_token: <SEU-TOKEN>
