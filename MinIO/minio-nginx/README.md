@@ -122,7 +122,7 @@ services:
        - minio-net
 ```
 
-Confira o Yaml completo em: (Yaml Completo)[./docker-compose-servers-nginx]
+Confira o Yaml completo em: [Yaml Completo](./docker-compose-servers-nginx.yaml)
 
 ## Acessando o minio
 Acesse o minio através do proxy reverso com:
