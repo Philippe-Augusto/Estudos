@@ -1,0 +1,131 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - /home/philippe/minIO/servers/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /home/philippe/minIO/servers/certs:/etc/nginx/certs:ro
+    ports:
+      - "443:443"
+    depends_on:
+      - minio1
+      - minio2
+      - minio3
+      - minio4
+    networks:
+     - minio-net
+
+  minio1:
+    image: docker.io/bitnami/minio:2025.3.12
+    container_name: minio1
+    command: minio server --certs-dir "/certs" --address ":9000" --console-address ":9001" https://minio1:9000/bitnami/minio/data https://minio2:9002/bitnami/minio/data https://minio3:9004/bitnami/minio/data https://minio4:9006/bitnami/minio/data
+    volumes:
+      - 'minio1_data:/bitnami/minio/data'
+      - /home/philippe/minIO/servers/certs:/certs
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1, minio2, minio3, minio4
+      - MINIO_PROMETHEUS_URL=http://prometheus:9090
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_SCHEME=https
+      - TZ="America/Sao_Paulo"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - minio-net
+
+  minio2:
+    image: docker.io/bitnami/minio:2025.3.12
+    container_name: minio2
+    command: minio server --certs-dir "/certs" --address ":9002" --console-address ":9003" https://minio1:9000/bitnami/minio/data https://minio2:9002/bitnami/minio/data https://minio3:9004/bitnami/minio/data https://minio4:9006/bitnami/minio/data
+    volumes:
+      - 'minio2_data:/bitnami/minio/data'
+      - /home/philippe/minIO/servers/certs:/certs
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1, minio2, minio3, minio4
+      - MINIO_PROMETHEUS_URL=http://prometheus:9090
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_SCHEME=https
+      - TZ="America/Sao_Paulo"
+    ports:
+     - "9002:9002"
+     - "9003:9003"
+    networks:
+      - minio-net
+
+  minio3:
+    image: docker.io/bitnami/minio:2025.3.12
+    container_name: minio3
+    command: minio server --certs-dir "/certs" --address ":9004" --console-address ":9005" https://minio1:9000/bitnami/minio/data https://minio2:9002/bitnami/minio/data https://minio3:9004/bitnami/minio/data https://minio4:9006/bitnami/minio/data
+    volumes:
+      - 'minio3_data:/bitnami/minio/data'
+      - /home/philippe/minIO/servers/certs:/certs
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1, minio2, minio3, minio4
+      - MINIO_PROMETHEUS_URL=http://prometheus:9090
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_SCHEME=https
+      - TZ="America/Sao_Paulo"
+    ports:
+      - "9004:9004"
+      - "9005:9005"
+    networks:
+      - minio-net
+
+  minio4:
+    image: docker.io/bitnami/minio:2025.3.12
+    container_name: minio4
+    command: minio server --certs-dir "/certs" --address ":9006" --console-address ":9007" https://minio1:9000/bitnami/minio/data https://minio2:9002/bitnami/minio/data https://minio3:9004/bitnami/minio/data https://minio4:9006/bitnami/minio/data
+    volumes:
+      - 'minio4_data:/bitnami/minio/data'
+      - /home/philippe/minIO/servers/certs:/certs
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1, minio2, minio3, minio4
+      - MINIO_PROMETHEUS_URL=http://prometheus:9090
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_SCHEME=https
+      - TZ="America/Sao_Paulo"
+    ports:
+      - "9006:9006"
+      - "9007:9007"
+    networks:
+      - minio-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - /home/philippe/minIO/servers/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - minio-net
+
+networks:
+  minio-net:
+    driver: bridge
+
+volumes:
+  minio1_data:
+    driver: local
+  minio2_data:
+    driver: local
+  minio3_data:
+    driver: local
+  minio4_data:
+    driver: local
+philippe@philippe:~
