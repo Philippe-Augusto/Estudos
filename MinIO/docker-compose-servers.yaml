@@ -4,7 +4,7 @@ services:
     container_name: minio1
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
+      - minio1_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
@@ -23,7 +23,7 @@ services:
     container_name: minio2
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio2_data:/bitnami/minio/data
+      - minio2_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
@@ -39,7 +39,7 @@ services:
     container_name: minio3
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio3_data:/bitnami/minio/data
+      - minio3_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
@@ -55,7 +55,7 @@ services:
     container_name: minio4
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio4_data:/bitnami/minio/data
+      - minio4_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
@@ -70,3 +70,13 @@ services:
 networks:
   minio-net:
     driver: bridge
+
+volumes:
+  minio1_data:
+    driver: local
+  minio2_data:
+    driver: local
+  minio3_data:
+    driver: local
+  minio4_data:
+    driver: local
