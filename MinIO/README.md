@@ -78,14 +78,7 @@ http://localhost:9000/
 ```sh
 docker pull bitnami/minio:2024.5.10
 ```
-### Preparar os diretórios de persistencia de dados
-
-```sh
-mkdir /home/philippe/minIO/servers/minio{1..4}_data
-sudo chown 1001 /home/philippe/minIO/servers/minio{1..4}_data
-```
-
-Iremos utilizar o docker-compose para fazer o deploy dos servidores
+### Criando o Docker Compose
 
 Este é um exemplo de configuração de 1 servidor, no repositório temos o yaml de configuração com os 4 servidores
 ```yaml
@@ -95,7 +88,7 @@ services:
     container_name: minio1
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/data
     volumes:
-      - /home/philippe/minIO/servers/minio1_data:/data
+      - minio1_data:/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
@@ -108,40 +101,11 @@ services:
       - "9001:9001"
     networks:
       - minio-net
-
-networks:
-  minio-net:
-    driver: bridge
 ```
 
 ### Testando o deploy dos servidores
 
 Configurar o MinIO Client - [Veja mais detalhes aqui](./minio-client/README.md)
-```yaml
-services:
-  minio1:
-    image: bitnami/minio:2024.5.10
-    container_name: minio1
-    command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
-    volumes:
-      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
-    environment:
-      MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: admin123
-      MINIO_DISTRIBUTED_MODE_ENABLED: yes
-      MINIO_DISTRIBUTED_NODES: minio1, minio2, minio3, minio4
-      MINIO_SCHEME: http
-      TZ: "America/Sao_Paulo"
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    networks:
-      - minio-net
-
-networks:
-  minio-net:
-    driver: bridge
-```
 
 Execute o container com:
 ```sh
@@ -233,7 +197,7 @@ minio1:
     container_name: minio1
     command: minio server --address ":9000" --console-address ":9001" http://minio{1...4}/bitnami/minio/data
     volumes:
-      - /home/philippe/minIO/servers/minio1_data:/bitnami/minio/data
+      - minio1_data:/bitnami/minio/data
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
