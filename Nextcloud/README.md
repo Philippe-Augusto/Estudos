@@ -75,5 +75,8 @@ Agora ao inserirmos um arquivo no servidor, o cliente realiza a sincronização 
 ![image](https://github.com/user-attachments/assets/acd45257-de04-4dff-92a7-a5a9399508f7)
 
 
+## Referencias
+[Nextcloud Documentation](https://docs.nextcloud.com/server/latest/admin_manual/contents.html)
+
 
 
