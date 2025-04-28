@@ -9,8 +9,8 @@ services:
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     environment:
-      - MYSQL_ROOT_PASSWORD=senha_raiz
-      - MYSQL_PASSWORD=senha_nextcloud
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_PASSWORD=admin
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
     volumes:
@@ -25,7 +25,7 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - MYSQL_PASSWORD=senha_nextcloud
+      - MYSQL_PASSWORD=admin
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
