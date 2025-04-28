@@ -53,12 +53,12 @@ sudo apt install nextcloud-desktop
 mkdir ~/nextcloud_sync
 ```
 
-### Sincronizando
+### Sincronizando via CLI
 ```sh
 nextcloudcmd ~/nextcloud_sync http://localhost:8080
 ```
 
-### Via interface gráfica
+### Sicnronizando via interface gráfica
 - Insira o URL do servidor
 
 ![image](https://github.com/user-attachments/assets/392b9e5c-329a-4f36-87a9-43380c516326)
