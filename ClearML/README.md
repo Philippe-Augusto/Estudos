@@ -3,6 +3,7 @@
 ## Requisitos
 - ClearML implementado com docker-compose (Disponível em: [docker-compose](./docker-compose.yaml))
 - 4 servidores MinIO implementados
+
 **Nota**: Certifique-se de que o ClearML e o MinIO estejam se comunicando através das redes gerenciadas pelo docker.
 
 ## Configure o clearm.conf
