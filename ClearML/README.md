@@ -6,30 +6,6 @@
 
 **Nota**: Certifique-se de que o ClearML e o MinIO estejam se comunicando através das redes gerenciadas pelo docker.
 
-## Configure o clearm.conf
-```
-sdk {
-    aws {
-        s3 {
-            credentials: [
-                {
-                    host: "localhost:9000"
-                    bucket: "clearml"
-                    key: "admin" ## Usuário do MinIO
-                    secret: "admin123" ## Senha MinIO
-                    multipart: false
-                    secure: false ## HTTP
-                    verify: false
-                }
-            ]
-        }
-    }
-    development {
-        default_output_uri: "s3://localhost:9000/clearml" ## Endereço do MinIO
-    }
-}
-```
-
 ## Adição de arquivos ao ClearML através do MinIO
 - Configure um bucket chamado clearml no MinIO e insira alguns arquivos para teste.
 
