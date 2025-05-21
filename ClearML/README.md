@@ -1,6 +1,6 @@
 # Documentação ClearML
 
-## Instalação Docker-Compose
+## Instalação via Docker-Compose
 ### 1. Modifique o `vm.max_map_count` no docker
 
 Pelo terminal:
@@ -39,7 +39,7 @@ export CLEARML_HOST_IP=server_host_ip_here
 **Nota**: As keys (ACCES_KEY e SECRET_KEY) são obtidas atraveś da interface web do clearML server.
 
 ### 4. Execute o compose
-Docker compose disponível em: [docker-compose](./docker-compose.yaml)
+Docker compose disponível em: [docker-compose](https://raw.githubusercontent.com/clearml/clearml-server/master/docker/docker-compose.yml)
 ```
 docker compose -f docker-compose.yaml up -d
 ```
