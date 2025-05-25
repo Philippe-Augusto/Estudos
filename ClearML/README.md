@@ -84,8 +84,50 @@ docker compose -f docker-compose.yaml start
 ```
 
 ## Manipulação básica de dados
+
+### **Configurar o ClearML**
+Configure o ClearML localmente:
+```bash
+clearml-init
+```
+
+- Siga as instruções para configurar as credenciais, que podem ser encontradas no ClearML UI.
+- O arquivo de configuração (`~/clearml.conf`) deve ser semelhante a:
+  
+```yaml
+api {
+    web_server: http://localhost:8080
+    api_server: http://localhost:8008
+    files_server: http://localhost:8081
+    credentials {
+        "access_key" = "II7W101CXRA6B3UTJLEBUO2WJTZR3T"
+        "secret_key" = "Yj6ax0n7dh0Dt_5X06qcAlzWQJ3rPbXP8BMmqSZ_TW2M4YYOrw2ftni7AfvYgDTdo-8"
+    }
+}
+sdk {
+    aws {
+        s3 {
+            credentials: [
+                {
+                    host: "localhost:9000"
+                    bucket: "clearml"
+                    key: "admin"
+                    secret: "admin123"
+                    multipart: false
+                    secure: false
+                    verify: false
+                }
+            ]
+        }
+    }
+    development {
+        default_output_uri: "s3://localhost:9000/clearml"
+    }
+}
+```
+
 ### Requisitos
-- ClearML implementado com docker-compose.
+- ClearML implementado com docker-compose e configurado (arquivo `clearm.conf`).
 - 4 servidores MinIO implementados.
 
 **Nota**: Certifique-se de que o ClearML e o MinIO estejam se comunicando através das redes gerenciadas pelo docker.
