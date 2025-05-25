@@ -1,5 +1,10 @@
 # Documentação ClearML
 
+Esta documentação tem como objetivo orientar a instalação e configuração do ClearML Server utilizando o Docker Compose, de forma prática e organizada. Além disso, será documentado a manipulação básica de um dataset no ClearML.
+Ao seguir os passos abaixo, você será capaz de levantar uma instância completa do ClearML Server localmente, incluindo seus principais serviços: MongoDB, Elasticsearch, Redis, e o próprio servidor ClearML. A instalação utiliza diretórios persistentes para garantir a integridade dos dados e permite a personalização por meio de variáveis de ambiente.
+
+Este guia assume que você já possui o Docker e o Docker Compose instalados no seu ambiente. Caso contrário, recomenda-se instalar essas ferramentas antes de prosseguir.
+
 ## Instalação via Docker-Compose
 ### 1. Modifique o `vm.max_map_count` no docker
 
@@ -41,13 +46,21 @@ Docker compose disponível em: [docker-compose](./docker-compose.yaml)
 docker compose -f docker-compose.yaml up -d
 ```
 
-### 4. Defina as variáveis de ambiente:
+### 4. Crie seu usuário e gere as chaves de acesso
+Acesse: `http://<YOUR_CLEARML_HOST_IP:8080`
 
-Acesse: `http://<YOUR_CLEARML_HOST_IP:8080/settings/workspace-configuration`
+- Crie uma conta de administrador preenchendo os campos solicitados.
 
-Clique em create new credentials, agora exporte as credenciais de acesso como variaveis de ambiente conforme o comando abaixo.
+- Após o login, vá até o canto superior direito e clique no seu usuário.
 
-Mas antes de exporta-las, precisamos parar os containers, faça isso com os seguinte comando:
+- Acesse "Settings" > "Workers & Queues" > "Create new credentials".
+
+- Copie a Access Key e a Secret Key geradas — você irá usá-las nas variáveis de ambiente.
+
+
+### 5. Defina as variáveis de ambiente:
+
+Pare os containers, faça isso com os seguinte comando:
 ```bash
 docker compose -f docker-compose.yaml stop
 ```
@@ -186,3 +199,6 @@ new_dataset.finalize(verbose=True, auto_upload=True)
 print(f"Novo dataset criado com ID: {new_dataset.id}")
 print(f"Arquivos adicionados: {selected_files}")
 ```
+
+## Referencias
+[ClearML Documentation](https://clear.ml/docs/latest/docs/)
