@@ -49,7 +49,7 @@ Clique em create new credentials, agora exporte as credenciais de acesso como va
 
 Mas antes de exporta-las, precisamos parar os containers, faça isso com os seguinte comando:
 ```bash
-docker compose -f docker-compose.yaml down
+docker compose -f docker-compose.yaml stop
 ```
 
 Agora vamos criar um arquivo `.env` na pasta onde esta o seu docker compose, o arquivo deve ser semelhante a esse:
@@ -67,7 +67,7 @@ export CLEARML_AGENT_GIT_PASS=git_password_here
 
 Agora suba o ClearML novamente e verifique se o agent esta atuando como worker no ClearML
 ```bash
-docker compose -f docker-compose.yaml up -d
+docker compose -f docker-compose.yaml start
 ```
 
 ## Manipulação básica de dados
