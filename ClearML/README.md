@@ -74,8 +74,8 @@ CLEARML_HOST_IP=127.0.0.1
 
 Caso você queira utilizar que o ClearML utilize o git para acessar repositórios privados, acrescente as seguintes variáveis de ambiente no arquivo `.env`:
 ```bash
-export CLEARML_AGENT_GIT_USER=git_username_here
-export CLEARML_AGENT_GIT_PASS=git_password_here
+CLEARML_AGENT_GIT_USER=git_username_here
+CLEARML_AGENT_GIT_PASS=git_password_here
 ```
 
 Agora suba o ClearML novamente e verifique se o agent esta atuando como worker no ClearML
