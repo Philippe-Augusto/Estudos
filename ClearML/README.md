@@ -30,21 +30,35 @@ sudo mkdir -p /opt/clearml/data/fileserver
 sudo chown -R 1000:1000 /opt/clearml
 ```
 
-### 3. Defina as variáveis de ambiente
+> ⚠️ **Atenção:** Caso você utilize um endereço diferente de `localhost:8080` para o webserver do ClearML, defina este endereço com:
 ```bash
-export CLEARML_AGENT_ACCESS_KEY=generate_access_key_here
-export CLEARML_AGENT_SECRET_KEY=generate_secret_key_here
 export CLEARML_HOST_IP=server_host_ip_here
 ```
-**Nota**: As keys (ACCES_KEY e SECRET_KEY) são obtidas atraveś da interface web do clearML server.
 
-### 4. Execute o compose
-Docker compose disponível em: [docker-compose](https://raw.githubusercontent.com/clearml/clearml-server/master/docker/docker-compose.yml)
+### 3. Execute o compose
+Docker compose disponível em: [docker-compose](./docker-compose.yaml)
 ```
 docker compose -f docker-compose.yaml up -d
 ```
 
-## Manipulação de dados
+### 4. Defina as variáveis de ambiente:
+
+Acesse: `http://<YOUR_CLEARML_HOST_IP:8080/settings/workspace-configuration`
+
+Clique em create new credentials, agora exporte as credenciais de acesso como variaveis de ambiente conforme o comando abaixo.
+
+```bash
+export CLEARML_AGENT_ACCESS_KEY=generate_access_key_here
+export CLEARML_AGENT_SECRET_KEY=generate_secret_key_here
+```
+
+Caso você queira utilizar que o ClearML utilize o git para acessar repositórios privados, forneça as seguintes variáveis de ambiente:
+```bash
+export CLEARML_AGENT_GIT_USER=git_username_here
+export CLEARML_AGENT_GIT_PASS=git_password_here
+```
+
+## Manipulação básica de dados
 ### Requisitos
 - ClearML implementado com docker-compose.
 - 4 servidores MinIO implementados.
