@@ -47,17 +47,19 @@ Acesse: `http://<YOUR_CLEARML_HOST_IP:8080/settings/workspace-configuration`
 
 Clique em create new credentials, agora exporte as credenciais de acesso como variaveis de ambiente conforme o comando abaixo.
 
-Mas antes de exporta-las, precisamos reiniciar os containers, faça isso com os seguintes comandos:
+Mas antes de exporta-las, precisamos parar os containers, faça isso com os seguinte comando:
 ```bash
 docker compose -f docker-compose.yaml down
 ```
 
-```bash
-export CLEARML_AGENT_ACCESS_KEY=generate_access_key_here
-export CLEARML_AGENT_SECRET_KEY=generate_secret_key_here
+Agora vamos criar um arquivo `.env` na pasta onde esta o seu docker compose, o arquivo deve ser semelhante a esse:
+```env
+CLEARML_AGENT_ACCESS_KEY=9MF85ZJ4ISB1GI1TH4XP8DTT7AXU2E
+CLEARML_AGENT_SECRET_KEY=zF4Tiqs7XcHMQFxtrgF5-wcMM_5Viipbfjh5Y6XD5KmGb-_1NwPfnj7Ain9fHij1qmQ
+CLEARML_HOST_IP=127.0.0.1
 ```
 
-Caso você queira utilizar que o ClearML utilize o git para acessar repositórios privados, forneça as seguintes variáveis de ambiente:
+Caso você queira utilizar que o ClearML utilize o git para acessar repositórios privados, acrescente as seguintes variáveis de ambiente no arquivo `.env`:
 ```bash
 export CLEARML_AGENT_GIT_USER=git_username_here
 export CLEARML_AGENT_GIT_PASS=git_password_here
